@@ -10,6 +10,8 @@ const server = http.createServer(
             // 
             console.log(req.httpVersion, req.url, req.method);
 
+            i += 125;
+
             if (req.url !== '/')
             {
                 // We return the 404 status code when they request a route / url that does not exist 
@@ -53,7 +55,7 @@ const server = http.createServer(
             res.writeHead(500, {'content-type':'text/html'});
 
             // payload / body 
-            res.write('<h1>500 Internal Server Error</h1>');
+            res.write('<h1>500 Erreur Interne au Serveur</h1>');
         }
             
         
