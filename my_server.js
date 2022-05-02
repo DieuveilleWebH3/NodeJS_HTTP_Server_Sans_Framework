@@ -15,11 +15,21 @@ const server = http.createServer(
             {
                 // We return the 404 status code when they request a route / url that does not exist 
 
+                const error404Html = fs.readFileSync('./public/pages/error404.html', function (err, html) {
+                    if (err) 
+                    {
+                        throw err; 
+                    } 
+    
+                    return html;
+                });
+
                 // header
                 res.writeHead(404, {'content-type': 'text/html'});
 
                 // payload / body 
-                res.write("<h1> 404 Page introuvable </h1>");
+                // res.write("<h1> 404 Page introuvable </h1>");
+                res.write(error404Html);
                 
             }
 
@@ -82,8 +92,7 @@ const server = http.createServer(
             // payload / body 
             // res.write('<h1>500 Erreur Interne au Serveur</h1>');
             res.write(error500Html);
-        }
-            
+        }            
         
         res.end();
     }
