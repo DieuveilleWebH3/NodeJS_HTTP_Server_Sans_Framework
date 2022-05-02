@@ -10,8 +10,6 @@ const server = http.createServer(
             // 
             console.log(req.httpVersion, req.url, req.method);
 
-            i += 125;
-
             if (req.url !== '/')
             {
                 // We return the 404 status code when they request a route / url that does not exist 
