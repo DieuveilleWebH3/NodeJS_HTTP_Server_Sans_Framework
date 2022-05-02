@@ -13,13 +13,24 @@ const server = http.createServer(
 
             if (req.url !== '/')
             {
+
+                const indexHtml = fs.readFileSync('../public/pages/index.html', function (err, html) {
+                    if (err) 
+                    {
+                        throw err; 
+                    } 
+
+                    return html;
+                });
+
                 // We return the 404 status code when they request a route / url that does not exist 
 
                 // header
                 res.writeHead(404, {'content-type': 'text/html'});
 
                 // payload / body 
-                res.write("<h1> 404 Page introuvable </h1>");
+                // res.write("<h1> 404 Page introuvable </h1>");
+                res.write(indexHtml);
             }
 
             // checking that the request has been made with the method GET 
