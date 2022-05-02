@@ -7,12 +7,6 @@ const server = http.createServer(
         if (req.method === "GET") 
         {
             // console.log("We received a connection");
-            
-            // console.log(req);
-            // console.log(req.url);
-            // console.log(req.method);
-
-            // console.log(res);
 
             res.writeHead(200, {'content-type': 'text/html'});
             res.write("<h1> HELLO WORLD DIEUVEILLE </h1>");
