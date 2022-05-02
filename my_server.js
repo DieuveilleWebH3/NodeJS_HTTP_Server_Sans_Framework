@@ -11,6 +11,11 @@ const server = http.createServer(
             res.writeHead(200, {'content-type': 'text/html'});
             res.write("<h1> HELLO WORLD DIEUVEILLE </h1>");
         }
+        else
+        {
+            res.writeHead(405, {'content-type': 'text/html'});
+            res.write("<h1> Methode non authorisée </h1>");
+        }
         
         res.end();
     }
