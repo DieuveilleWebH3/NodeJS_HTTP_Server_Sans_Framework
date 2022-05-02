@@ -26,7 +26,9 @@ const server = http.createServer(
             // checking that the request has been made with the method GET 
             else if (req.method === "GET") 
             {
-                const indexHtml = fs.readFileSync('../public/pages/index.html', function (err, html) {
+                console.log("\n");
+
+                const indexHtml = fs.readFileSync('./public/pages/index.html', function (err, html) {
                     if (err) 
                     {
                         throw err; 
@@ -34,6 +36,10 @@ const server = http.createServer(
 
                     return html;
                 });
+
+                console.log(indexHtml);
+
+                console.log("\n");
 
                 // We return the right status code with the correct message  
 
