@@ -13,7 +13,19 @@ const server = http.createServer(
 
             if (req.url !== '/')
             {
+                // We return the 404 status code when they request a route / url that does not exist 
 
+                // header
+                res.writeHead(404, {'content-type': 'text/html'});
+
+                // payload / body 
+                res.write("<h1> 404 Page introuvable </h1>");
+                
+            }
+
+            // checking that the request has been made with the method GET 
+            else if (req.method === "GET") 
+            {
                 const indexHtml = fs.readFileSync('../public/pages/index.html', function (err, html) {
                     if (err) 
                     {
@@ -23,26 +35,14 @@ const server = http.createServer(
                     return html;
                 });
 
-                // We return the 404 status code when they request a route / url that does not exist 
-
-                // header
-                res.writeHead(404, {'content-type': 'text/html'});
-
-                // payload / body 
-                // res.write("<h1> 404 Page introuvable </h1>");
-                res.write(indexHtml);
-            }
-
-            // checking that the request has been made with the method GET 
-            else if (req.method === "GET") 
-            {
                 // We return the right status code with the correct message  
 
                 // header
                 res.writeHead(200, {'content-type': 'text/html'});
 
                 // paylod / body
-                res.write("<h1> HELLO WORLD DIEUVEILLE </h1>");
+                // res.write("<h1> HELLO WORLD DIEUVEILLE </h1>");
+                res.write(indexHtml);
             }
 
             // if the request has not been made with the method GET 
