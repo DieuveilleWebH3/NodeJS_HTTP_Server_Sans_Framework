@@ -9,11 +9,7 @@ const server = http.createServer(
 
         try {
             // 
-            console.log(req.httpVersion, req.url, req.method);
-
-            i += 123;
-
-            console.loge(i);
+            // console.log(req.httpVersion, req.url, req.method);
 
             if (req.url !== '/')
             {
