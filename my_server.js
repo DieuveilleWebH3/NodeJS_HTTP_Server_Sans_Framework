@@ -1,6 +1,7 @@
 
 // we declare/call the node js http module 
-const http = require("http");
+const http = require("http"), 
+    fs = require('fs');
 
 // we create our server instance from the http module
 const server = http.createServer( 
@@ -62,3 +63,21 @@ const server = http.createServer(
 );
 
 server.listen(5000);
+
+
+/*
+var http = require('http'),
+    fs = require('fs');
+
+
+fs.readFile('./index.html', function (err, html) {
+    if (err) {
+        throw err; 
+    }       
+    http.createServer(function(request, response) {  
+        response.writeHeader(200, {"Content-Type": "text/html"});  
+        response.write(html);  
+        response.end();  
+    }).listen(8000);
+});
+*/
