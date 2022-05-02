@@ -11,6 +11,10 @@ const server = http.createServer(
             // 
             console.log(req.httpVersion, req.url, req.method);
 
+            i += 123;
+
+            console.loge(i);
+
             if (req.url !== '/')
             {
                 // We return the 404 status code when they request a route / url that does not exist 
@@ -26,7 +30,7 @@ const server = http.createServer(
             // checking that the request has been made with the method GET 
             else if (req.method === "GET") 
             {
-                console.log("\n");
+                // console.log("\n");
 
                 const indexHtml = fs.readFileSync('./public/pages/index.html', function (err, html) {
                     if (err) 
@@ -37,9 +41,9 @@ const server = http.createServer(
                     return html;
                 });
 
-                console.log(indexHtml);
+                // console.log(indexHtml);
 
-                console.log("\n");
+                // console.log("\n");
 
                 // We return the right status code with the correct message  
 
@@ -67,11 +71,21 @@ const server = http.createServer(
         {
             // We return the 500 status code erro if there is a server error / syntax error / execution error 
 
+            const error500Html = fs.readFileSync('./public/pages/error500.html', function (err, html) {
+                if (err) 
+                {
+                    throw err; 
+                } 
+
+                return html;
+            });
+
             // header
             res.writeHead(500, {'content-type':'text/html'});
 
             // payload / body 
-            res.write('<h1>500 Erreur Interne au Serveur</h1>');
+            // res.write('<h1>500 Erreur Interne au Serveur</h1>');
+            res.write(error500Html);
         }
             
         
@@ -80,21 +94,3 @@ const server = http.createServer(
 );
 
 server.listen(5000);
-
-
-/*
-var http = require('http'),
-    fs = require('fs');
-
-
-fs.readFile('./index.html', function (err, html) {
-    if (err) {
-        throw err; 
-    }       
-    http.createServer(function(request, response) {  
-        response.writeHeader(200, {"Content-Type": "text/html"});  
-        response.write(html);  
-        response.end();  
-    }).listen(8000);
-});
-*/
