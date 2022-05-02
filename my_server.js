@@ -66,11 +66,21 @@ const server = http.createServer(
             {
                 // We return the 405 status code for / with the method not allowed message 
 
+                const error405Html = fs.readFileSync('./public/pages/error405.html', function (err, html) {
+                    if (err) 
+                    {
+                        throw err; 
+                    } 
+    
+                    return html;
+                });
+
                 // header
                 res.writeHead(405, {'content-type': 'text/html'});
 
                 // payload / body 
-                res.write("<h1> 405 Methode non authorisée </h1>");
+                // res.write("<h1> 405 Methode non authorisée </h1>");
+                res.write(error405Html);
             }
         }
         catch (err) 
