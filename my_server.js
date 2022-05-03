@@ -58,6 +58,26 @@ const server = http.createServer(
                     res.write(my_image);
                 }
 
+                else if (req.url === '/public/css/style.css') 
+                {
+                    // We return the image route when requested  
+
+                    const my_style = fs.readFileSync(path.join(__dirname, req.url), function (err, css) {
+                        if (err) 
+                        {
+                            throw err; 
+                        } 
+    
+                        return css;
+                    });
+
+                    // header
+                    res.writeHead(200, { 'content-type': 'text/css' }); 
+
+                    // paylod / body
+                    res.write(my_style);
+                }
+
                 else
                 {
                     // We return the 404 status code when they request a route / url that does not exist 
