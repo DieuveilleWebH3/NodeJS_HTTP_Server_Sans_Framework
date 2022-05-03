@@ -10,53 +10,76 @@ const server = http.createServer(
     (req, res) =>{
 
         try {
-            
+
             // console.log(req.httpVersion, req.url, req.method);
 
-            if (req.url !== '/')
-            {
-                // We return the 404 status code when they request a route / url that does not exist 
-
-                // const error404Html = fs.readFileSync('./public/pages/error404.html', function (err, html) {
-                const error404Html = fs.readFileSync(path.join(__dirname, "/public/pages/error404.html"), function (err, html) {
-                    if (err) 
-                    {
-                        throw err; 
-                    } 
-    
-                    return html;
-                });
-
-                // header
-                res.writeHead(404, {'content-type': 'text/html'});
-
-                // payload / body 
-                // res.write("<h1> 404 Page introuvable </h1>");
-                res.write(error404Html);
-                
-            }
-
             // checking that the request has been made with the method GET 
-            else if (req.method === "GET") 
+            if (req.method === "GET") 
             {
-                // const indexHtml = fs.readFileSync('./public/pages/index.html', function (err, html) {
-                const indexHtml = fs.readFileSync(path.join(__dirname, "/public/pages/index.html"), function (err, html) {
-                    if (err) 
-                    {
-                        throw err; 
-                    } 
+                if (req.url === '/')
+                {
+                    // const indexHtml = fs.readFileSync('./public/pages/index.html', function (err, html) {
+                    const indexHtml = fs.readFileSync(path.join(__dirname, "/public/pages/index.html"), function (err, html) {
+                        if (err) 
+                        {
+                            throw err; 
+                        } 
 
-                    return html;
-                });
+                        return html;
+                    });
 
-                // We return the right status code with the correct message  
+                    // We return the right status code with the correct message  
 
-                // header
-                res.writeHead(200, {'content-type': 'text/html'});
+                    // header
+                    res.writeHead(200, {'content-type': 'text/html'});
 
-                // paylod / body
-                // res.write("<h1> HELLO WORLD DIEUVEILLE </h1>");
-                res.write(indexHtml);
+                    // paylod / body
+                    // res.write("<h1> HELLO WORLD DIEUVEILLE </h1>");
+                    res.write(indexHtml);
+                }
+
+                else if (req.url === '/public/images/image.png') {
+
+                    const my_image = fs.readFileSync(path.join(__dirname, req.url), function (err, img) {
+                        if (err) 
+                        {
+                            throw err; 
+                        } 
+    
+                        return img;
+                    });
+
+                    // header
+                    res.writeHead(200, { 'content-type': 'image/png' }); 
+
+                    // paylod / body
+                    res.write(my_image); 
+                    console.log(my_image);
+                }
+
+                else
+                {
+                    // We return the 404 status code when they request a route / url that does not exist 
+
+                    // const error404Html = fs.readFileSync('./public/pages/error404.html', function (err, html) {
+                    const error404Html = fs.readFileSync(path.join(__dirname, "/public/pages/error404.html"), function (err, html) {
+                        if (err) 
+                        {
+                            throw err; 
+                        } 
+        
+                        return html;
+                    });
+
+                    // header
+                    res.writeHead(404, {'content-type': 'text/html'});
+
+                    // payload / body 
+                    // res.write("<h1> 404 Page introuvable </h1>");
+                    res.write(error404Html);
+                    
+                }
+
             }
 
             // if the request has not been made with the method GET 
