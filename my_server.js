@@ -172,5 +172,5 @@ const server = http.createServer(
     }
 );
 
-// we listen / deploy on port 5000
+// We listen / serve / deploy  on port 5000
 server.listen(5000);
