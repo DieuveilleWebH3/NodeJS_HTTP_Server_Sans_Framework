@@ -38,11 +38,11 @@ const server = http.createServer(
                     res.write(indexHtml);
                 }
 
-                else if (req.url === '/public/images/image.png') 
+                else if (req.url === '/public/image.png' || req.url === '/public/png/image.png') 
                 {
                     // We return the image route when requested  
 
-                    const my_image = fs.readFileSync(path.join(__dirname, req.url), function (err, img) {
+                    const my_image = fs.readFileSync(path.join(__dirname, '/public/png/image.png'), function (err, img) {
                         if (err) 
                         {
                             throw err; 
