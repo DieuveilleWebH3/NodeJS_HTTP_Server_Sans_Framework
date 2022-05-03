@@ -1,14 +1,15 @@
 
-// we declare/call the node js http module 
+// we declare/call the node js http module & file system module
 const http = require("http"), 
     fs = require('fs');
+
 
 // we create our server instance from the http module
 const server = http.createServer( 
     (req, res) =>{
 
         try {
-            // 
+            
             // console.log(req.httpVersion, req.url, req.method);
 
             if (req.url !== '/')
@@ -108,4 +109,5 @@ const server = http.createServer(
     }
 );
 
+// we listen / deploy on port 5000
 server.listen(5000);
