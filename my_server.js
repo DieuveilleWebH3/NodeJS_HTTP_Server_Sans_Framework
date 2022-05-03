@@ -1,7 +1,8 @@
 
-// we declare/call the node js http module & file system module
+// we declare/call the node js http module & file system module & path module 
 const http = require("http"), 
-    fs = require('fs');
+    fs = require('fs'),
+    path = require('path');
 
 
 // we create our server instance from the http module
@@ -16,7 +17,8 @@ const server = http.createServer(
             {
                 // We return the 404 status code when they request a route / url that does not exist 
 
-                const error404Html = fs.readFileSync('./public/pages/error404.html', function (err, html) {
+                // const error404Html = fs.readFileSync('./public/pages/error404.html', function (err, html) {
+                const error404Html = fs.readFileSync(path.join(__dirname, "/public/pages/error404.html"), function (err, html) {
                     if (err) 
                     {
                         throw err; 
@@ -37,9 +39,8 @@ const server = http.createServer(
             // checking that the request has been made with the method GET 
             else if (req.method === "GET") 
             {
-                // console.log("\n");
-
-                const indexHtml = fs.readFileSync('./public/pages/index.html', function (err, html) {
+                // const indexHtml = fs.readFileSync('./public/pages/index.html', function (err, html) {
+                const indexHtml = fs.readFileSync(path.join(__dirname, "/public/pages/index.html"), function (err, html) {
                     if (err) 
                     {
                         throw err; 
@@ -47,10 +48,6 @@ const server = http.createServer(
 
                     return html;
                 });
-
-                // console.log(indexHtml);
-
-                // console.log("\n");
 
                 // We return the right status code with the correct message  
 
@@ -67,7 +64,8 @@ const server = http.createServer(
             {
                 // We return the 405 status code for / with the method not allowed message 
 
-                const error405Html = fs.readFileSync('./public/pages/error405.html', function (err, html) {
+                // const error405Html = fs.readFileSync('./public/pages/error405.html', function (err, html) {
+                const error405Html = fs.readFileSync(path.join(__dirname, "/public/pages/error405.html"), function (err, html) {
                     if (err) 
                     {
                         throw err; 
@@ -88,7 +86,8 @@ const server = http.createServer(
         {
             // We return the 500 status code erro if there is a server error / syntax error / execution error 
 
-            const error500Html = fs.readFileSync('./public/pages/error500.html', function (err, html) {
+            // const error500Html = fs.readFileSync('./public/pages/error500.html', function (err, html) {
+            const error500Html = fs.readFileSync(path.join(__dirname, "/public/pages/error500.html"), function (err, html) {
                 if (err) 
                 {
                     throw err; 
