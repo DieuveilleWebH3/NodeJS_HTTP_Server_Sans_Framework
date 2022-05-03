@@ -38,7 +38,9 @@ const server = http.createServer(
                     res.write(indexHtml);
                 }
 
-                else if (req.url === '/public/images/image.png') {
+                else if (req.url === '/public/images/image.png') 
+                {
+                    // We return the image route when requested  
 
                     const my_image = fs.readFileSync(path.join(__dirname, req.url), function (err, img) {
                         if (err) 
@@ -53,8 +55,7 @@ const server = http.createServer(
                     res.writeHead(200, { 'content-type': 'image/png' }); 
 
                     // paylod / body
-                    res.write(my_image); 
-                    console.log(my_image);
+                    res.write(my_image);
                 }
 
                 else
