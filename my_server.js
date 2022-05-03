@@ -5,6 +5,20 @@ const http = require("http"),
     path = require('path');
 
 
+const memoryDb = new Map(); // est global
+let id = 0; // doit être global
+memoryDb.set(id++, {nom: "Alice"}); 
+memoryDb.set(id++, {nom: "Bob"});
+memoryDb.set(id++, {nom: "Charlie"});
+
+const mapToObj = m => {
+    return Array.from(m).reduce((obj, [key, value]) => {
+        obj[key] = value;
+        return obj;
+    }, {});
+};
+
+
 // we create our server instance from the http module
 const server = http.createServer( 
     (req, res) =>{
@@ -12,6 +26,13 @@ const server = http.createServer(
         try {
 
             // console.log(req.httpVersion, req.url, req.method);
+
+
+            console.log(" Map memory DB");
+            console.log(memoryDb);
+            console.log("JSON memory DB");
+            console.log(JSON.stringify(memoryDb));
+
 
             // checking that the request has been made with the method GET 
             if (req.method === "GET") 
@@ -98,6 +119,88 @@ const server = http.createServer(
                     res.write(my_script);
                 }
 
+                else if (req.url === '/api/names') 
+                {
+
+                    console.log(" Map memory DB  in  IF");
+                    console.log(memoryDb);
+                    console.log("JSON memory DBB  in  IF");
+                    console.log(JSON.stringify(memoryDb));
+
+
+                    // let data = '';
+
+                    // req.on('data', chunk => {
+
+                    //     console.log("\n"); 
+
+                    //     data += chunk;
+
+                    //     console.log("Chunk Data", data); 
+
+                    // });
+
+                    // req.on('end', () => {
+
+                    //     console.log("\n"); 
+                
+                    //     // console.log(JSON.parse(data).todo); // 'Buy the milk'
+                
+                    //     // console.log("End Data", data); 
+                    //     console.log("End Data", JSON.parse(data)); // 'Buy the milk'
+                
+                    //     let results = {
+                    //         name : "Hello",
+                    //         age : 21
+                    //     };
+                
+                    //     results = JSON.stringify(results);
+                
+                    //     res.write(results);
+                
+                    //     res.end();
+                    // });
+
+
+
+                    let testing = new Map(); 
+                    let j = 0; 
+                    testing.set(j++, {nom: "Alice"});
+                    testing.set(j++, {nom: "Bob"});
+                    testing.set(j++, {nom: "Charlie"});
+
+                    // header
+                    // res.writeHead(200, { 'content-type': 'application/json' }); 
+                    res.writeHead(200, { 'content-type': 'text/javascript' }); 
+
+                    // paylod / body
+                    // res.write(testing);
+                    // res.write(123);
+
+                    const responseData = {
+                        message: "Hello, GFG Learner",
+                        articleData: 
+                        {
+                            articleName: "How to send JSON response from NodeJS",
+                            category: "NodeJS",
+                            status: "published"
+                        },
+                        endingMessage: "Visit Geeksforgeeks.org for more"
+                    }
+                    
+                    // const jsonContent = JSON.stringify(memoryDb);
+                    const jsonContent = JSON.stringify(testing);
+                    // const jsonContent = JSON.stringify(responseData);
+                    
+                    // res.end(jsonContent);
+                    // res.end(testing);
+                    // res.end(memoryDb);
+
+                    res.write(JSON.stringify(mapToObj(memoryDb)));
+
+                    
+                }
+
                 else
                 {
                     // We return the 404 status code when they request a route / url that does not exist 
@@ -145,6 +248,7 @@ const server = http.createServer(
                 // res.write("<h1> 405 Methode non authorisée </h1>");
                 res.write(error405Html);
             }
+
         }
         catch (err) 
         {
@@ -166,11 +270,47 @@ const server = http.createServer(
             // payload / body 
             // res.write('<h1>500 Erreur Interne au Serveur</h1>');
             res.write(error500Html);
-        }            
+        } 
         
         res.end();
     }
+
 );
 
 // We listen / serve / deploy  on port 5000
 server.listen(5000);
+
+
+
+/*
+
+
+if (req.method === "POST") {
+    let data = ''
+    req.on('data', chunk => {
+        data += chunk;
+    })
+    req.on('end', () => {
+        try {
+            if (typeof data === undefined) {
+                throw 'bad request'
+            } else {
+                data = JSON.parse(data)
+                if (!('name' in data)) {
+                    throw 'bad request - test'
+                }
+                let currentId = id
+                memoryDb.set(id++, data)
+                res.writeHead(201, { 'content-type': 'application/json' });
+                res.write(JSON.stringify(memoryDb.get(currentId)));
+                res.end();
+            }
+        } catch (err) {
+            console.log(err)
+            res.writeHead(400, { 'content-type': 'text/html' });
+            res.write(fs.readFileSync(path.join(__dirname, "public", "pages", "bad_request.html")));
+            res.end()
+        }
+    });
+
+*/
