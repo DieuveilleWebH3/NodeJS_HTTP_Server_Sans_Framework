@@ -1,7 +1,7 @@
-# CRUD App #
+# Building REST apis with Nodejs without using any framework or external library #
 
 
-## Node JS App (test) ## 
+## Node JS CRUD App (test) ## 
 
 
 ## Introduction ##
@@ -42,8 +42,11 @@ There is one 1 component (module / general scope of project) in this project
 
 **Useful Links**
 
- - Homepage                localhost:5000 
- 
+ - Index                localhost:5000 
+
+ - Image                localhost:5000/public/images/image.png 
+
+ - Css                  localhost:5000/public/css/style.css   
 
 
 
@@ -51,15 +54,29 @@ There is one 1 component (module / general scope of project) in this project
 
 **Functions**
 
+ - Create   
 
-Create   
+ - Read 
 
-Read 
+ - Update    
 
-Update    
-
-Delete  
+ - Delete  
  
+
+
+
+
+**Resources**
+
+  - https://developer.mozilla.org/en-US/docs/Web/HTTP/Status
+
+  - https://www.baeldung.com/curl-rest
+
+  - https://stackoverflow.com/questions/4720343/loading-basic-html-in-node-js
+
+  - https://www.mealternance.com/static/monAlter/enfr/images/testi1.jpg
+
+  - https://stackoverflow.com/questions/32330737/ubuntu-using-curl-to-download-an-image
 
 
 
