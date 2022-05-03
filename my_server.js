@@ -60,7 +60,7 @@ const server = http.createServer(
 
                 else if (req.url === '/public/css/style.css') 
                 {
-                    // We return the image route when requested  
+                    // We return the style;css route when requested  
 
                     const my_style = fs.readFileSync(path.join(__dirname, req.url), function (err, css) {
                         if (err) 
