@@ -60,7 +60,7 @@ const server = http.createServer(
 
                 else if (req.url === '/public/css/style.css') 
                 {
-                    // We return the style;css route when requested  
+                    // We return the style.css route when requested  
 
                     const my_style = fs.readFileSync(path.join(__dirname, req.url), function (err, css) {
                         if (err) 
@@ -76,6 +76,26 @@ const server = http.createServer(
 
                     // paylod / body
                     res.write(my_style);
+                }
+
+                else if (req.url === '/public/js/script.js') 
+                {
+                    // We return the script.js route when requested  
+
+                    const my_script = fs.readFileSync(path.join(__dirname, req.url), function (err, js) {
+                        if (err) 
+                        {
+                            throw err; 
+                        } 
+    
+                        return js;
+                    });
+
+                    // header
+                    res.writeHead(200, { 'content-type': 'text/javascript' }); 
+
+                    // paylod / body
+                    res.write(my_script);
                 }
 
                 else
