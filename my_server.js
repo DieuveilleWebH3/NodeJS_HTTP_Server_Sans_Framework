@@ -160,8 +160,6 @@ const server = http.createServer(
                     {
                         console.log(the_id, " : ", typeof(the_id));
 
-                        // if('a1'.match(/^\d+$/)) {console.log('It matches')} else {console.log('It does not match')}
-
                         if( the_id.match(/^\d+$/) )
                         {
 
