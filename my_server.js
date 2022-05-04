@@ -1,12 +1,22 @@
 
-// we declare/call the node js http module & file system module & path module 
-const http = require("http"), 
-    fs = require('fs'),
-    path = require('path');
+/* We  import / declare / call  all the Node JS modules we need */
+
+// http
+const http = require("http"); 
+
+// file system module
+const fs = require('fs');
+ 
+// path module
+const path = require('path');
 
 
-const memoryDb = new Map(); // est global
-let id = 0; // doit être global
+// We create our database 
+const memoryDb = new Map();
+
+// We create the initial id
+let id = 0; 
+
 memoryDb.set(id++, {nom: "Alice"}); 
 memoryDb.set(id++, {nom: "Bob"});
 memoryDb.set(id++, {nom: "Charlie"});
@@ -26,13 +36,6 @@ const server = http.createServer(
         try {
 
             // console.log(req.httpVersion, req.url, req.method);
-
-
-            console.log(" Map memory DB");
-            console.log(memoryDb);
-            console.log("JSON memory DB");
-            console.log(JSON.stringify(memoryDb));
-
 
             // checking that the request has been made with the method GET 
             if (req.method === "GET") 
@@ -121,84 +124,12 @@ const server = http.createServer(
 
                 else if (req.url === '/api/names') 
                 {
-
-                    console.log(" Map memory DB  in  IF");
-                    console.log(memoryDb);
-                    console.log("JSON memory DBB  in  IF");
-                    console.log(JSON.stringify(memoryDb));
-
-
-                    // let data = '';
-
-                    // req.on('data', chunk => {
-
-                    //     console.log("\n"); 
-
-                    //     data += chunk;
-
-                    //     console.log("Chunk Data", data); 
-
-                    // });
-
-                    // req.on('end', () => {
-
-                    //     console.log("\n"); 
-                
-                    //     // console.log(JSON.parse(data).todo); // 'Buy the milk'
-                
-                    //     // console.log("End Data", data); 
-                    //     console.log("End Data", JSON.parse(data)); // 'Buy the milk'
-                
-                    //     let results = {
-                    //         name : "Hello",
-                    //         age : 21
-                    //     };
-                
-                    //     results = JSON.stringify(results);
-                
-                    //     res.write(results);
-                
-                    //     res.end();
-                    // });
-
-
-
-                    let testing = new Map(); 
-                    let j = 0; 
-                    testing.set(j++, {nom: "Alice"});
-                    testing.set(j++, {nom: "Bob"});
-                    testing.set(j++, {nom: "Charlie"});
-
                     // header
-                    // res.writeHead(200, { 'content-type': 'application/json' }); 
-                    res.writeHead(200, { 'content-type': 'text/javascript' }); 
+                    res.writeHead(200, { 'content-type': 'application/json' }); 
+                    // res.writeHead(200, { 'content-type': 'text/javascript' }); 
 
-                    // paylod / body
-                    // res.write(testing);
-                    // res.write(123);
-
-                    const responseData = {
-                        message: "Hello, GFG Learner",
-                        articleData: 
-                        {
-                            articleName: "How to send JSON response from NodeJS",
-                            category: "NodeJS",
-                            status: "published"
-                        },
-                        endingMessage: "Visit Geeksforgeeks.org for more"
-                    }
-                    
-                    // const jsonContent = JSON.stringify(memoryDb);
-                    const jsonContent = JSON.stringify(testing);
-                    // const jsonContent = JSON.stringify(responseData);
-                    
-                    // res.end(jsonContent);
-                    // res.end(testing);
-                    // res.end(memoryDb);
-
+                    // paylod / body 
                     res.write(JSON.stringify(mapToObj(memoryDb)));
-
-                    
                 }
 
                 else
@@ -226,7 +157,7 @@ const server = http.createServer(
 
             }
 
-            // if the request has not been made with the method GET 
+            // if the request has not been made with the method GET
             else
             {
                 // We return the 405 status code for / with the method not allowed message 
@@ -280,37 +211,3 @@ const server = http.createServer(
 // We listen / serve / deploy  on port 5000
 server.listen(5000);
 
-
-
-/*
-
-
-if (req.method === "POST") {
-    let data = ''
-    req.on('data', chunk => {
-        data += chunk;
-    })
-    req.on('end', () => {
-        try {
-            if (typeof data === undefined) {
-                throw 'bad request'
-            } else {
-                data = JSON.parse(data)
-                if (!('name' in data)) {
-                    throw 'bad request - test'
-                }
-                let currentId = id
-                memoryDb.set(id++, data)
-                res.writeHead(201, { 'content-type': 'application/json' });
-                res.write(JSON.stringify(memoryDb.get(currentId)));
-                res.end();
-            }
-        } catch (err) {
-            console.log(err)
-            res.writeHead(400, { 'content-type': 'text/html' });
-            res.write(fs.readFileSync(path.join(__dirname, "public", "pages", "bad_request.html")));
-            res.end()
-        }
-    });
-
-*/
