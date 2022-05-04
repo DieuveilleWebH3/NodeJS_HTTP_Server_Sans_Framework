@@ -150,7 +150,7 @@ const server = http.createServer(
                     // console.log(the_id);
 
                     // if( id not in )  204 No Content
-                    if (the_id > req.url.split('/').length) 
+                    if (the_id >= memoryDb.size) 
                     {
                         // header
                         // res.writeHead(204, { 'content-type': 'text/html' }); 
