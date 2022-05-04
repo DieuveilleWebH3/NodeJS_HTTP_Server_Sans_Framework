@@ -27,6 +27,8 @@ let id = 0;
 memoryDb.set(id++, {nom: "Alice"}); 
 memoryDb.set(id++, {nom: "Bob"});
 memoryDb.set(id++, {nom: "Charlie"});
+memoryDb.set(id++, {nom: "Dieuveille"});
+memoryDb.set(id++, {nom: "BOUSSA ELLENGA"});
 
 const mapToObj = m => {
     return Array.from(m).reduce((obj, [key, value]) => {
