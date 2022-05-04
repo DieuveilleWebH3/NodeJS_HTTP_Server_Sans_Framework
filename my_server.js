@@ -50,7 +50,6 @@ const server = http.createServer(
             {
                 if (req.url === '/')
                 {
-                    // const indexHtml = fs.readFileSync('./public/pages/index.html', function (err, html) {
                     const indexHtml = fs.readFileSync(path.join(__dirname, "/public/pages/index.html"), function (err, html) {
                         if (err) 
                         {
@@ -66,7 +65,6 @@ const server = http.createServer(
                     res.writeHead(200, {'content-type': 'text/html'});
 
                     // paylod / body
-                    // res.write("<h1> HELLO WORLD DIEUVEILLE </h1>");
                     res.write(indexHtml);
                 }
 
@@ -134,22 +132,18 @@ const server = http.createServer(
                 {
                     // header
                     res.writeHead(200, { 'content-type': 'application/json' }); 
-                    // res.writeHead(200, { 'content-type': 'text/javascript' }); 
 
                     // paylod / body 
                     res.write(JSON.stringify(mapToObj(memoryDb)));
                 }
 
-                // else if (req.url === '/api/name/2') 
-                // else if (req.url === '/api/name/:the_id')  // for Express  // does not work with just Node JS
                 else if (req.url.match(/\/api\/name\/\d+$/))
                 {
                     // we retrieve the id 
                     let the_id = parseInt((req.url.split('/'))[req.url.split('/').length - 1]);
 
-                    // console.log(the_id);
 
-                    // if( id not in )  204 No Content
+                    // if the id does not exist in the object  ===  204 No Content
                     if (the_id >= memoryDb.size) 
                     {
                         // header
@@ -163,11 +157,7 @@ const server = http.createServer(
                     else
                     {
                         // header
-                        res.writeHead(200, { 'content-type': 'application/json' }); 
-
-                        // console.log("\n");
-                        // console.log(JSON.stringify(mapToObj(memoryDb)[2]));
-                        // console.log("\n");
+                        res.writeHead(200, { 'content-type': 'application/json' });
 
                         // paylod / body 
                         res.write(JSON.stringify(mapToObj(memoryDb)[the_id]));
@@ -179,7 +169,6 @@ const server = http.createServer(
                 {
                     // We return the 404 status code when they request a route / url that does not exist 
 
-                    // const error404Html = fs.readFileSync('./public/pages/error404.html', function (err, html) {
                     const error404Html = fs.readFileSync(path.join(__dirname, "/public/pages/error404.html"), function (err, html) {
                         if (err) 
                         {
@@ -193,7 +182,6 @@ const server = http.createServer(
                     res.writeHead(404, {'content-type': 'text/html'});
 
                     // payload / body 
-                    // res.write("<h1> 404 Page introuvable </h1>");
                     res.write(error404Html);
                     
                 }
@@ -262,7 +250,6 @@ const server = http.createServer(
                 {
                     // We return the 404 status code when they request a route / url that does not exist 
 
-                    // const error404Html = fs.readFileSync('./public/pages/error404.html', function (err, html) {
                     const error404Html = fs.readFileSync(path.join(__dirname, "/public/pages/error404.html"), function (err, html) {
                         if (err) 
                         {
@@ -276,7 +263,6 @@ const server = http.createServer(
                     res.writeHead(404, {'content-type': 'text/html'});
 
                     // payload / body 
-                    // res.write("<h1> 404 Page introuvable </h1>");
                     res.write(error404Html);
                     
                 }
@@ -290,9 +276,7 @@ const server = http.createServer(
                     // we retrieve the id 
                     let the_id = parseInt((req.url.split('/'))[req.url.split('/').length - 1]);
 
-                    // console.log(the_id);
-
-                    // if( id not in )  204 No Content
+                    // if id not in the object   ===  204 No Content
                     if (the_id >= memoryDb.size + 1) 
                     {
                         // header
@@ -353,7 +337,6 @@ const server = http.createServer(
                 {
                     // We return the 404 status code when they request a route / url that does not exist 
 
-                    // const error404Html = fs.readFileSync('./public/pages/error404.html', function (err, html) {
                     const error404Html = fs.readFileSync(path.join(__dirname, "/public/pages/error404.html"), function (err, html) {
                         if (err) 
                         {
@@ -367,7 +350,6 @@ const server = http.createServer(
                     res.writeHead(404, {'content-type': 'text/html'});
 
                     // payload / body 
-                    // res.write("<h1> 404 Page introuvable </h1>");
                     res.write(error404Html);
                     
                 }
@@ -382,9 +364,7 @@ const server = http.createServer(
                     // we retrieve the id 
                     let the_id = parseInt((req.url.split('/'))[req.url.split('/').length - 1]);
 
-                    // console.log(the_id);
-
-                    // if( id not in )  204 No Content
+                    // if id not in object  ===  204 No Content
                     if (the_id >= memoryDb.size) 
                     {
                         // header
@@ -405,7 +385,6 @@ const server = http.createServer(
                 {
                     // We return the 404 status code when they request a route / url that does not exist 
 
-                    // const error404Html = fs.readFileSync('./public/pages/error404.html', function (err, html) {
                     const error404Html = fs.readFileSync(path.join(__dirname, "/public/pages/error404.html"), function (err, html) {
                         if (err) 
                         {
@@ -419,7 +398,6 @@ const server = http.createServer(
                     res.writeHead(404, {'content-type': 'text/html'});
 
                     // payload / body 
-                    // res.write("<h1> 404 Page introuvable </h1>");
                     res.write(error404Html);
                     
                 }
@@ -431,7 +409,6 @@ const server = http.createServer(
             {
                 // We return the 405 status code for / with the method not allowed message 
 
-                // const error405Html = fs.readFileSync('./public/pages/error405.html', function (err, html) {
                 const error405Html = fs.readFileSync(path.join(__dirname, "/public/pages/error405.html"), function (err, html) {
                     if (err) 
                     {
@@ -445,7 +422,6 @@ const server = http.createServer(
                 res.writeHead(405, {'content-type': 'text/html'});
 
                 // payload / body 
-                // res.write("<h1> 405 Methode non authorisée </h1>");
                 res.write(error405Html);
             }
 
@@ -454,7 +430,6 @@ const server = http.createServer(
         {
             // We return the 500 status code erro if there is a server error / syntax error / execution error 
 
-            // const error500Html = fs.readFileSync('./public/pages/error500.html', function (err, html) {
             const error500Html = fs.readFileSync(path.join(__dirname, "/public/pages/error500.html"), function (err, html) {
                 if (err) 
                 {
@@ -468,7 +443,6 @@ const server = http.createServer(
             res.writeHead(500, {'content-type':'text/html'});
 
             // payload / body 
-            // res.write('<h1>500 Erreur Interne au Serveur</h1>');
             res.write(error500Html);
         } 
         
