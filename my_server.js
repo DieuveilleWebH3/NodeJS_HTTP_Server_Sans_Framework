@@ -145,7 +145,7 @@ const server = http.createServer(
                     // we retrieve the id 
                     let the_id = (req.url.split('/'))[req.url.split('/').length - 1];
 
-                    if (typeof(the_id) === undefined || typeof(the_id) === null || typeof(the_id) === " " || typeof(the_id) === "") 
+                    if (typeof(the_id) === undefined || typeof(the_id) === null) 
                     {
                         // header
                         res.writeHead(400, { 'content-type': 'text/html' }); 
@@ -153,8 +153,6 @@ const server = http.createServer(
                         // throw 'bad request'
                         // 400 Bad Request
                         res.write("<h1> 400 Bad Request </h1>");
-
-                        // res.end();
                     }
                     else
                     {
