@@ -139,7 +139,8 @@ const server = http.createServer(
                 }
 
                 // else if (req.url === '/api/name/2') 
-                else if (req.url === '/api/name/:the_id')
+                // else if (req.url === '/api/name/:the_id')  // for Express  // does not work with just Node JS
+                else if (req.url.match(/\/api\/name\/*/))
                 {
                     // we retrieve the id 
                     let the_id = (req.url.split('/'))[req.url.split('/').length - 1];
