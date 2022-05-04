@@ -27,6 +27,8 @@ let id = 0;
 memoryDb.set(id++, {nom: "Alice"}); 
 memoryDb.set(id++, {nom: "Bob"});
 memoryDb.set(id++, {nom: "Charlie"});
+memoryDb.set(id++, {nom: "Dieuveille"});
+memoryDb.set(id++, {nom: "BOUSSA ELLENGA"});
 
 const mapToObj = m => {
     return Array.from(m).reduce((obj, [key, value]) => {
@@ -41,7 +43,6 @@ const server = http.createServer(
     (req, res) =>{
 
         try {
-
             // console.log(req.httpVersion, req.url, req.method);
 
             // checking that the request has been made with the method GET 
@@ -159,7 +160,7 @@ const server = http.createServer(
                     }
                     else
                     {
-                        console.log(the_id, " : ", typeof(the_id));
+                        // console.log(the_id, " : ", typeof(the_id));
 
                         // if('a1'.match(/^\d+$/)) {console.log('It matches')} else {console.log('It does not match')}
 
@@ -168,7 +169,7 @@ const server = http.createServer(
 
                             the_id = parseInt(the_id);
 
-                            console.log(the_id);
+                            // console.log(the_id);
 
                             // if( id not in )  204 No Content
                             if (the_id >= req.url.split('/').length) 
@@ -244,7 +245,90 @@ const server = http.createServer(
 
             }
 
-            // if the request has not been made with the method GET
+            // checking that the request has been made with the method POST 
+            else if (req.method === "POST") 
+            {
+                if (req.url === '/api/names') 
+                {
+                    let data = '';
+
+                    req.on('data', chunk => {
+                        data += chunk;
+                    });
+
+                    req.on('end', () => {
+                        // if (isNullOrUndefined(data)) 
+                        if (typeof(data) === undefined || typeof(data) === null) 
+                        {
+                            // header
+                            res.writeHead(400, { 'content-type': 'text/html' });
+
+                            // throw 'bad request'
+                            // 400 Bad Request
+                            res.write("<h1> 400 Bad Request </h1>");
+                        } 
+
+                        else 
+                        {
+                            data = JSON.parse(data);
+
+                            console.log(typeof(data), "\n", data);
+
+                            if (!('name' in data)) 
+                            {
+                                // header
+                                // res.writeHead(400, { 'content-type': 'text/html' });
+                                res.writeHead(200, { 'content-type': 'text/html' });
+
+                                // throw 'bad request'
+                                // 400 Bad Request
+                                console.log("<h1> 400 Bad Request </h1>");
+                                res.write("<h1> 400 Bad Request </h1>");
+                            }
+                            else
+                            {
+                                let the_current_id = id;
+
+                                memoryDb.set(id++, data);
+
+                                // header
+                                res.writeHead(201, { 'content-type': 'application/json' });
+
+                                // paylod / body 
+                                console.log("<h1> 201 Element Created</h1>");
+
+                                console.log(memoryDb);
+
+                                res.write(JSON.stringify(memoryDb.get(the_current_id)));
+                            }
+                        }
+                    });
+                }
+                else
+                {
+                    // We return the 404 status code when they request a route / url that does not exist 
+
+                    // const error404Html = fs.readFileSync('./public/pages/error404.html', function (err, html) {
+                    const error404Html = fs.readFileSync(path.join(__dirname, "/public/pages/error404.html"), function (err, html) {
+                        if (err) 
+                        {
+                            throw err; 
+                        } 
+        
+                        return html;
+                    });
+
+                    // header
+                    res.writeHead(404, {'content-type': 'text/html'});
+
+                    // payload / body 
+                    // res.write("<h1> 404 Page introuvable </h1>");
+                    res.write(error404Html);
+                    
+                }
+            }
+
+            // if the request has not been made with the method GET nor POST
             else
             {
                 // We return the 405 status code for / with the method not allowed message 
@@ -297,5 +381,3 @@ const server = http.createServer(
 
 // We listen / serve / deploy  on port 5000
 server.listen(5000);
-
-
