@@ -1,5 +1,5 @@
 
-/* ***** We  import / declare / call  all the Node JS modules we need ***** */
+/* We  import / declare / call  all the Node JS modules we need */
 
 // http
 const http = require("http"); 
@@ -41,6 +41,7 @@ const server = http.createServer(
     (req, res) =>{
 
         try {
+
             // console.log(req.httpVersion, req.url, req.method);
 
             // checking that the request has been made with the method GET 
@@ -192,7 +193,28 @@ const server = http.createServer(
                                 // paylod / body 
                                 res.write(JSON.stringify(mapToObj(memoryDb)[the_id]));
                                 // res.write(JSON.stringify(mapToObj(memoryDb)[2]));
-                            }  
+                            }
+                        }
+                        else
+                        {
+                            // We return the 404 status code when they request a route / url that does not exist 
+
+                            // const error404Html = fs.readFileSync('./public/pages/error404.html', function (err, html) {
+                            const error404Html = fs.readFileSync(path.join(__dirname, "/public/pages/error404.html"), function (err, html) {
+                                if (err) 
+                                {
+                                    throw err; 
+                                } 
+                
+                                return html;
+                            });
+
+                            // header
+                            res.writeHead(404, {'content-type': 'text/html'});
+
+                            // payload / body 
+                            // res.write("<h1> 404 Page introuvable </h1>");
+                            res.write(error404Html);
                         }
                     }
                 }
