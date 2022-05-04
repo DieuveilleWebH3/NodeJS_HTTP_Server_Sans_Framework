@@ -160,6 +160,8 @@ const server = http.createServer(
                     {
                         console.log(the_id, " : ", typeof(the_id));
 
+                        // if('a1'.match(/^\d+$/)) {console.log('It matches')} else {console.log('It does not match')}
+
                         if( the_id.match(/^\d+$/) )
                         {
 
@@ -167,18 +169,32 @@ const server = http.createServer(
 
                             console.log(the_id);
 
-                            // header
-                            res.writeHead(200, { 'content-type': 'application/json' }); 
+                            // if( id not in )  204 No Content
+                            if (the_id >= req.url.split('/').length) 
+                            {
+                                // header
+                                // res.writeHead(204, { 'content-type': 'text/html' }); 
+                                res.writeHead(200, { 'content-type': 'text/html' }); 
 
-                            // console.log("\n");
-                            // console.log(JSON.stringify(mapToObj(memoryDb)[2]));
-                            // console.log("\n");
+                                // throw '204 No Content'
+                                // 204 No Content
+                                res.write("<h1> 204 No Content </h1>");
+                            }
+                            else
+                            {
+                                // header
+                                res.writeHead(200, { 'content-type': 'application/json' }); 
 
-                            // paylod / body 
-                            res.write(JSON.stringify(mapToObj(memoryDb)[the_id]));
-                            // res.write(JSON.stringify(mapToObj(memoryDb)[2]));
+                                // console.log("\n");
+                                // console.log(JSON.stringify(mapToObj(memoryDb)[2]));
+                                // console.log("\n");
+
+                                // paylod / body 
+                                res.write(JSON.stringify(mapToObj(memoryDb)[the_id]));
+                                // res.write(JSON.stringify(mapToObj(memoryDb)[2]));
+                            }  
                         }
-                    }   
+                    }
                 }
 
                 else
