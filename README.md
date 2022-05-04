@@ -44,9 +44,15 @@ There is one 1 component (module / general scope of project) in this project
 
  - Index                localhost:5000 
 
- - Image                localhost:5000/public/images/image.png 
+ - Names                localhost:5000/api/names  
 
- - Css                  localhost:5000/public/css/style.css   
+ - Name                 localhost:5000/api/name/{{id}}  
+
+ - Image                localhost:5000/public/images/image.png  
+
+ - Css                  localhost:5000/public/css/style.css  
+
+ - javascript           localhost:5000/public/js/script.js   
 
 
 
@@ -54,13 +60,13 @@ There is one 1 component (module / general scope of project) in this project
 
 **Functions**
 
- - Create   
+ - Create   POST API
 
- - Read 
+ - Read     GET API
 
- - Update    
+ - Update   PUT API 
 
- - Delete  
+ - Delete   DELETE API 
  
 
 
