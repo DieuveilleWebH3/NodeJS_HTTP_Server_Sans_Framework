@@ -1,8 +1,32 @@
 
-// we declare/call the node js http module & file system module & path module 
-const http = require("http"), 
-    fs = require('fs'),
-    path = require('path');
+/* We  import / declare / call  all the Node JS modules we need */
+
+// http
+const http = require("http"); 
+
+// file system module
+const fs = require('fs');
+ 
+// path module
+const path = require('path');
+
+
+// We create our database 
+const memoryDb = new Map();
+
+// We create the initial id
+let id = 0; 
+
+memoryDb.set(id++, {nom: "Alice"}); 
+memoryDb.set(id++, {nom: "Bob"});
+memoryDb.set(id++, {nom: "Charlie"});
+
+const mapToObj = m => {
+    return Array.from(m).reduce((obj, [key, value]) => {
+        obj[key] = value;
+        return obj;
+    }, {});
+};
 
 
 // we create our server instance from the http module
@@ -98,6 +122,16 @@ const server = http.createServer(
                     res.write(my_script);
                 }
 
+                else if (req.url === '/api/names') 
+                {
+                    // header
+                    res.writeHead(200, { 'content-type': 'application/json' }); 
+                    // res.writeHead(200, { 'content-type': 'text/javascript' }); 
+
+                    // paylod / body 
+                    res.write(JSON.stringify(mapToObj(memoryDb)));
+                }
+
                 else
                 {
                     // We return the 404 status code when they request a route / url that does not exist 
@@ -123,7 +157,7 @@ const server = http.createServer(
 
             }
 
-            // if the request has not been made with the method GET 
+            // if the request has not been made with the method GET
             else
             {
                 // We return the 405 status code for / with the method not allowed message 
@@ -145,6 +179,7 @@ const server = http.createServer(
                 // res.write("<h1> 405 Methode non authorisée </h1>");
                 res.write(error405Html);
             }
+
         }
         catch (err) 
         {
@@ -166,11 +201,13 @@ const server = http.createServer(
             // payload / body 
             // res.write('<h1>500 Erreur Interne au Serveur</h1>');
             res.write(error500Html);
-        }            
+        } 
         
         res.end();
     }
+
 );
 
 // We listen / serve / deploy  on port 5000
 server.listen(5000);
+
