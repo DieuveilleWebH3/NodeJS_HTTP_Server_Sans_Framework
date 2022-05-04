@@ -258,6 +258,9 @@ const server = http.createServer(
                         // if (isNullOrUndefined(data)) 
                         if (typeof(data) === undefined || typeof(data) === null) 
                         {
+                            // header
+                            res.writeHead(400, { 'content-type': 'text/html' });
+
                             // throw 'bad request'
                             // 400 Bad Request
                             res.write("<h1> 400 Bad Request </h1>");
@@ -269,6 +272,9 @@ const server = http.createServer(
 
                             if (!('name' in data)) 
                             {
+                                // header
+                                res.writeHead(400, { 'content-type': 'text/html' });
+
                                 // throw 'bad request'
                                 // 400 Bad Request
                                 res.write("<h1> 400 Bad Request </h1>");
