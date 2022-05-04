@@ -158,7 +158,7 @@ const server = http.createServer(
                     }
                     else
                     {
-                        console.log(the_id, " : ", typeof(the_id));
+                        // console.log(the_id, " : ", typeof(the_id));
 
                         // if('a1'.match(/^\d+$/)) {console.log('It matches')} else {console.log('It does not match')}
 
@@ -167,7 +167,7 @@ const server = http.createServer(
 
                             the_id = parseInt(the_id);
 
-                            console.log(the_id);
+                            // console.log(the_id);
 
                             // if( id not in )  204 No Content
                             if (the_id >= req.url.split('/').length) 
@@ -268,26 +268,37 @@ const server = http.createServer(
 
                         else 
                         {
-                            data = JSON.parse(data)
+                            data = JSON.parse(data);
+
+                            console.log(typeof(data), "\n", data);
 
                             if (!('name' in data)) 
                             {
                                 // header
-                                res.writeHead(400, { 'content-type': 'text/html' });
+                                // res.writeHead(400, { 'content-type': 'text/html' });
+                                res.writeHead(200, { 'content-type': 'text/html' });
 
                                 // throw 'bad request'
                                 // 400 Bad Request
+                                console.log("<h1> 400 Bad Request </h1>");
                                 res.write("<h1> 400 Bad Request </h1>");
                             }
+                            else
+                            {
+                                let the_current_id = id;
 
-                            let the_current_id = id
-                            memoryDb.set(id++, data)
+                                memoryDb.set(id++, data);
 
-                            // header
-                            res.writeHead(201, { 'content-type': 'application/json' });
+                                // header
+                                res.writeHead(201, { 'content-type': 'application/json' });
 
-                            // paylod / body 
-                            res.write(JSON.stringify(memoryDb.get(the_current_id)));
+                                // paylod / body 
+                                console.log("<h1> 201 Element Created</h1>");
+
+                                console.log(memoryDb);
+
+                                res.write(JSON.stringify(memoryDb.get(the_current_id)));
+                            }
                         }
                     });
                 }
