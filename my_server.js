@@ -1,5 +1,5 @@
 
-/* We  import / declare / call  all the Node JS modules we need */
+/* ***** We  import / declare / call  all the Node JS modules we need ***** */
 
 // http
 const http = require("http"); 
@@ -9,6 +9,13 @@ const fs = require('fs');
  
 // path module
 const path = require('path');
+
+// 
+// const util = require("util");
+// // import { isNullOrUndefined } from "util";       // this has been deprecated 
+// // const { isNullOrUndefined } = require("util");   // this has been deprecated 
+// import { isNullOrUndefined } from 'is-what';    // cannot use import outside module 
+// const { isNullOrUndefined } = require("is-what");   // cannot use import outside module 
 
 
 // We create our database 
@@ -34,7 +41,6 @@ const server = http.createServer(
     (req, res) =>{
 
         try {
-
             // console.log(req.httpVersion, req.url, req.method);
 
             // checking that the request has been made with the method GET 
@@ -132,6 +138,26 @@ const server = http.createServer(
                     res.write(JSON.stringify(mapToObj(memoryDb)));
                 }
 
+                // else if (req.url === '/api/name/2') 
+                else if (req.url === '/api/name/:the_id')
+                {
+                    // we retrieve the id 
+                    let the_id = (req.url.split('/'))[req.url.split('/').length - 1];
+                    
+                    console.log(the_id, " : ", typeof(the_id));
+                    
+                    // header
+                    res.writeHead(200, { 'content-type': 'application/json' }); 
+
+                    console.log("\n");
+                    console.log(JSON.stringify(mapToObj(memoryDb)[2]));
+                    console.log("\n");
+
+                    // paylod / body 
+                    res.write(JSON.stringify(mapToObj(memoryDb)[the_id]));
+                    // res.write(JSON.stringify(mapToObj(memoryDb)[2]));
+                }
+
                 else
                 {
                     // We return the 404 status code when they request a route / url that does not exist 
@@ -210,4 +236,5 @@ const server = http.createServer(
 
 // We listen / serve / deploy  on port 5000
 server.listen(5000);
+
 
