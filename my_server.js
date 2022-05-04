@@ -142,81 +142,36 @@ const server = http.createServer(
 
                 // else if (req.url === '/api/name/2') 
                 // else if (req.url === '/api/name/:the_id')  // for Express  // does not work with just Node JS
-                else if (req.url.match(/\/api\/name\/*/))
+                else if (req.url.match(/\/api\/name\/\d+$/))
                 {
                     // we retrieve the id 
-                    let the_id = (req.url.split('/'))[req.url.split('/').length - 1];
+                    let the_id = parseInt((req.url.split('/'))[req.url.split('/').length - 1]);
 
-                    if (typeof(the_id) === undefined || typeof(the_id) === null) 
+                    // console.log(the_id);
+
+                    // if( id not in )  204 No Content
+                    if (the_id > req.url.split('/').length) 
                     {
                         // header
-                        res.writeHead(400, { 'content-type': 'text/html' }); 
+                        // res.writeHead(204, { 'content-type': 'text/html' }); 
+                        res.writeHead(200, { 'content-type': 'text/html' }); 
 
-                        // throw 'bad request'
-                        // 400 Bad Request
-                        res.write("<h1> 400 Bad Request </h1>");
-
-                        // res.end();
+                        // throw '204 No Content'
+                        // 204 No Content
+                        res.write("<h1> 204 No Content </h1>");
                     }
                     else
                     {
-                        // console.log(the_id, " : ", typeof(the_id));
+                        // header
+                        res.writeHead(200, { 'content-type': 'application/json' }); 
 
-                        // if('a1'.match(/^\d+$/)) {console.log('It matches')} else {console.log('It does not match')}
+                        // console.log("\n");
+                        // console.log(JSON.stringify(mapToObj(memoryDb)[2]));
+                        // console.log("\n");
 
-                        if( the_id.match(/^\d+$/) )
-                        {
-
-                            the_id = parseInt(the_id);
-
-                            // console.log(the_id);
-
-                            // if( id not in )  204 No Content
-                            if (the_id >= req.url.split('/').length) 
-                            {
-                                // header
-                                // res.writeHead(204, { 'content-type': 'text/html' }); 
-                                res.writeHead(200, { 'content-type': 'text/html' }); 
-
-                                // throw '204 No Content'
-                                // 204 No Content
-                                res.write("<h1> 204 No Content </h1>");
-                            }
-                            else
-                            {
-                                // header
-                                res.writeHead(200, { 'content-type': 'application/json' }); 
-
-                                // console.log("\n");
-                                // console.log(JSON.stringify(mapToObj(memoryDb)[2]));
-                                // console.log("\n");
-
-                                // paylod / body 
-                                res.write(JSON.stringify(mapToObj(memoryDb)[the_id]));
-                                // res.write(JSON.stringify(mapToObj(memoryDb)[2]));
-                            }
-                        }
-                        else
-                        {
-                            // We return the 404 status code when they request a route / url that does not exist 
-
-                            // const error404Html = fs.readFileSync('./public/pages/error404.html', function (err, html) {
-                            const error404Html = fs.readFileSync(path.join(__dirname, "/public/pages/error404.html"), function (err, html) {
-                                if (err) 
-                                {
-                                    throw err; 
-                                } 
-                
-                                return html;
-                            });
-
-                            // header
-                            res.writeHead(404, {'content-type': 'text/html'});
-
-                            // payload / body 
-                            // res.write("<h1> 404 Page introuvable </h1>");
-                            res.write(error404Html);
-                        }
+                        // paylod / body 
+                        res.write(JSON.stringify(mapToObj(memoryDb)[the_id]));
+                        // res.write(JSON.stringify(mapToObj(memoryDb)[2]));
                     }
                 }
 
