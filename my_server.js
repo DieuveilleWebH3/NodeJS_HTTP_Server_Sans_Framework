@@ -150,9 +150,9 @@ const server = http.createServer(
                     // header
                     res.writeHead(200, { 'content-type': 'application/json' }); 
 
-                    // console.log("\n");
-                    // console.log(JSON.stringify(mapToObj(memoryDb)[2]));
-                    // console.log("\n");
+                    console.log("\n");
+                    console.log(JSON.stringify(mapToObj(memoryDb)[2]));
+                    console.log("\n");
 
                     // paylod / body 
                     res.write(JSON.stringify(mapToObj(memoryDb)[the_id]));
