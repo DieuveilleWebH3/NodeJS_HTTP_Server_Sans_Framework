@@ -281,6 +281,18 @@ const server = http.createServer(
                     res.write(error404Html);
                     
                 }
+            }           
+
+            // checking that the request has been made with the method POST 
+            else if (req.method === "PUT") 
+            {
+
+            }           
+
+            // checking that the request has been made with the method POST 
+            else if (req.method === "DELETE") 
+            {
+
             }
 
             // if the request has not been made with the method GET nor POST
