@@ -153,23 +153,34 @@ const server = http.createServer(
                         // throw 'bad request'
                         // 400 Bad Request
                         res.write("<h1> 400 Bad Request </h1>");
+
+                        // res.end();
                     }
                     else
                     {
-                    
                         console.log(the_id, " : ", typeof(the_id));
-                        
-                        // header
-                        res.writeHead(200, { 'content-type': 'application/json' }); 
 
-                        console.log("\n");
-                        console.log(JSON.stringify(mapToObj(memoryDb)[2]));
-                        console.log("\n");
+                        // if('a1'.match(/^\d+$/)) {console.log('It matches')} else {console.log('It does not match')}
 
-                        // paylod / body 
-                        res.write(JSON.stringify(mapToObj(memoryDb)[the_id]));
-                        // res.write(JSON.stringify(mapToObj(memoryDb)[2]));
-                    }
+                        if( the_id.match(/^\d+$/) )
+                        {
+
+                            the_id = parseInt(the_id);
+
+                            console.log(the_id);
+
+                            // header
+                            res.writeHead(200, { 'content-type': 'application/json' }); 
+
+                            // console.log("\n");
+                            // console.log(JSON.stringify(mapToObj(memoryDb)[2]));
+                            // console.log("\n");
+
+                            // paylod / body 
+                            res.write(JSON.stringify(mapToObj(memoryDb)[the_id]));
+                            // res.write(JSON.stringify(mapToObj(memoryDb)[2]));
+                        }
+                    }   
                 }
 
                 else
