@@ -142,21 +142,36 @@ const server = http.createServer(
                 // else if (req.url === '/api/name/:the_id')  // for Express  // does not work with just Node JS
                 else if (req.url.match(/\/api\/name\/*/))
                 {
-                    // we retrieve the id
+                    // we retrieve the id 
                     let the_id = (req.url.split('/'))[req.url.split('/').length - 1];
-                    
-                    console.log(the_id, " : ", typeof(the_id));
-                    
-                    // header
-                    res.writeHead(200, { 'content-type': 'application/json' }); 
 
-                    console.log("\n");
-                    console.log(JSON.stringify(mapToObj(memoryDb)[2]));
-                    console.log("\n");
+                    if (typeof(the_id) === undefined || typeof(the_id) === null || typeof(the_id) === " " || typeof(the_id) === "") 
+                    {
+                        // header
+                        res.writeHead(400, { 'content-type': 'text/html' }); 
 
-                    // paylod / body 
-                    res.write(JSON.stringify(mapToObj(memoryDb)[the_id]));
-                    // res.write(JSON.stringify(mapToObj(memoryDb)[2]));
+                        // throw 'bad request'
+                        // 400 Bad Request
+                        res.write("<h1> 400 Bad Request </h1>");
+
+                        // res.end();
+                    }
+                    else
+                    {
+                    
+                        console.log(the_id, " : ", typeof(the_id));
+                        
+                        // header
+                        res.writeHead(200, { 'content-type': 'application/json' }); 
+
+                        console.log("\n");
+                        console.log(JSON.stringify(mapToObj(memoryDb)[2]));
+                        console.log("\n");
+
+                        // paylod / body 
+                        res.write(JSON.stringify(mapToObj(memoryDb)[the_id]));
+                        // res.write(JSON.stringify(mapToObj(memoryDb)[2]));
+                    }
                 }
 
                 else
