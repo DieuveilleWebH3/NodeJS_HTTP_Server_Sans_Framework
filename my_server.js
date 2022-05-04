@@ -286,6 +286,96 @@ const server = http.createServer(
             // checking that the request has been made with the method POST 
             else if (req.method === "PUT") 
             {
+                if (req.url.match(/\/api\/name\/\d+$/))
+                {
+                    // we retrieve the id 
+                    let the_id = parseInt((req.url.split('/'))[req.url.split('/').length - 1]);
+
+                    // console.log(the_id);
+
+                    // if( id not in )  204 No Content
+                    if (the_id >= memoryDb.size) 
+                    {
+                        // header
+                        // res.writeHead(204, { 'content-type': 'text/html' }); 
+                        res.writeHead(200, { 'content-type': 'text/html' }); 
+
+                        // throw '204 No Content'
+                        // 204 No Content
+                        res.write("<h1> 204 No Content </h1>");
+                    }
+                    else
+                    {
+                        // header
+                        res.writeHead(204, { 'content-type': 'application/json' }); 
+
+                        let data = '';
+
+                        req.on('data', chunk => {
+                            data += chunk;
+                        });
+
+                        req.on('end', () => {
+                            // if (isNullOrUndefined(data)) 
+                            if (typeof(data) === undefined || typeof(data) === null) 
+                            {
+                                // header
+                                res.writeHead(400, { 'content-type': 'text/html' });
+
+                                // throw 'bad request'
+                                // 400 Bad Request
+                                res.write("<h1> 400 Bad Request </h1>");
+                            }
+
+                            else 
+                            {
+                                data = JSON.parse(data);
+    
+                                console.log(typeof(data), "\n", data);
+    
+                                if (!('name' in data)) 
+                                {
+                                    // header
+                                    // res.writeHead(400, { 'content-type': 'text/html' });
+                                    res.writeHead(200, { 'content-type': 'text/html' });
+    
+                                    // throw 'bad request'
+                                    // 400 Bad Request
+                                    console.log("<h1> 400 Bad Request </h1>");
+                                    res.write("<h1> 400 Bad Request </h1>");
+                                }
+                                else
+                                {
+                                    memoryDb.set(the_id, data)
+                                    res.writeHead(204);
+                                }
+                            }
+                        });
+                    }
+                }
+                
+                else
+                {
+                    // We return the 404 status code when they request a route / url that does not exist 
+
+                    // const error404Html = fs.readFileSync('./public/pages/error404.html', function (err, html) {
+                    const error404Html = fs.readFileSync(path.join(__dirname, "/public/pages/error404.html"), function (err, html) {
+                        if (err) 
+                        {
+                            throw err; 
+                        } 
+        
+                        return html;
+                    });
+
+                    // header
+                    res.writeHead(404, {'content-type': 'text/html'});
+
+                    // payload / body 
+                    // res.write("<h1> 404 Page introuvable </h1>");
+                    res.write(error404Html);
+                    
+                }
 
             }           
 
